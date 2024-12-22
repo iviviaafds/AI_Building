@@ -1,16 +1,27 @@
-# TODO Найдите количество книг, которое можно разместить на дискете
-volume_mb = 1.44
-pages = 100
-rows = 50
-symb = 25
-symb_volume = 4
+# TODO импортировать необходимые молули
+import csv
+import json
+from collections import OrderedDict
 
-# Перевод объема дискеты в байты:
-volume_kb = 1024 * volume_mb
-volume_b = 1024 * volume_kb
+INPUT_FILENAME = "input.csv"
+OUTPUT_FILENAME = "output.json"
 
-total_symb = symb * rows * pages # Подсчет символов
-demanded_volume = total_symb * symb_volume # Объем всей книги в байтах
-books = int(volume_b // demanded_volume)
+def task() -> None:
+    data = []
+    with open(INPUT_FILENAME, mode='r', encoding='utf-8') as csv_file:
+        reader = csv.DictReader(csv_file)
+        data = [OrderedDict(row) for row in reader]
+    with open(OUTPUT_FILENAME, mode='w', encoding='utf-8') as json_file:
+        json_file.write(json.dumps(data, indent=4))
+    ...  # TODO считать содержимое csv файла
 
-print("Количество книг, помещающихся на дискету:", books)
+    ...  # TODO Сериализовать в файл с отступами равными 4
+
+
+if __name__ == '__main__':
+    # Нужно для проверки
+    task()
+
+    with open(OUTPUT_FILENAME) as output_f:
+        for line in output_f:
+            print(line, end="")
